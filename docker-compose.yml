@@ -1,0 +1,56 @@
+version: '3.4'
+
+
+
+networks:
+  nginx-proxy:
+    external: true
+  # gis-net:
+  #   external: true
+
+
+volumes:
+
+  openstreetmap-tiles:
+    external: true
+
+    
+services:
+
+  # openstreetmaps-proxy: # TEST
+  #   image: nginx
+  #   environment:
+  #     VIRTUAL_HOST: 'maps.dev.kernel.online'
+  #     VIRTUAL_PORT: '80'
+  #     VIRTUAL_NETWORK: 'nginx-proxy'
+  #     LETSENCRYPT_HOST: 'maps.dev.kernel.online'
+  #     LETSENCRYPT_EMAIL: 'dev@dariocaruso.info'
+  #   networks:
+  #     - nginx-proxy
+  #     - gis-net
+  #   volumes:
+  #     - ./ostileserverproxynginx.conf:/etc/nginx/nginx.conf:ro
+  #   restart: always
+  #   logging:
+  #     driver: json-file
+  #     options:
+  #       max-size: 50m
+
+  openstreetmaps: # TEST
+    image: dottgonzo/osm-italy:stable
+    network_mode: host
+    # networks:
+    #   gis-net:
+    #     ipv4_address: 172.99.0.44
+    volumes: 
+      - /cloud/volumes/osm/tiles:/var/lib/mod_tile
+      - ./postgresql.conf:/etc/postgresql/10/main/postgresql.conf
+      - ./renderd.conf:/usr/local/etc/renderd.conf
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+    restart: always
+    command: 'run'
+    shm_size: 2G
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
