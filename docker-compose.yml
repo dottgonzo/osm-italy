@@ -9,10 +9,10 @@ networks:
   #   external: true
 
 
-volumes:
+# volumes:
 
-  openstreetmap-tiles:
-    external: true
+#   openstreetmap-tiles:
+#     external: true
 
     
 services:
