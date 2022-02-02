@@ -9,17 +9,22 @@ const PORT = process.env.PORT || 3000;
 const HOST = "0.0.0.0";
 const OSM_URI = process.env.OSM_URI || "https://proxy.geo.kernel.online/osm"
 const NOMINATIM_URI = process.env.NOMINATIM_URI || "https://proxy.geo.kernel.online/nominatim"
+const PERMANENT_TOKENT = process.env.PERMANENT_TOKENT
 
 const JWT_SECRET = process.env.JWT_SECRET || 'testsecretjwt'
 
 app.use('*', (req, res, next) => {
   const authorization = req.headers['authorization']
+  if (PERMANENT_TOKENT && authorization === PERMANENT_TOKENT) return next()
   jwt.verify(authorization, JWT_SECRET, { maxAge: "2 days" }, function (err, decoded) {
     if (err) next(err)
     next()
   });
 })
-
+app.get('/token', (req, res) => {
+  const token = jwt.sign({}, 'nenwhH9_J0noi', { expiresIn: "2 days" });
+  res.json({ token })
+});
 app.use('/nominatim', createProxyMiddleware({
   target: NOMINATIM_URI,
   changeOrigin: true,

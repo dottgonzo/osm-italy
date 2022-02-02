@@ -68,6 +68,7 @@ services:
       OSM_URI: "http://172.99.0.44"
       NOMINATIM_URI: "http://172.99.0.33:8080"
       JWT_SECRET: ${JWT_SECRET:-testsecret4token}
+      PERMANENT_TOKEN: ${PERMANENT_TOKEN:-testsecret_permanent_4token}
     logging:
       driver: json-file
       options:
