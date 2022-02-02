@@ -76,7 +76,7 @@ services:
     # ports:
     #     - "9090:80"
     volumes: 
-      - /cloud/volumes/osm/tiles:/var/lib/mod_tile
+      - ${TILES_VOLUME:-/opt/tiles}:/var/lib/mod_tile
       - ./postgresql.conf:/etc/postgresql/10/main/postgresql.conf
       # - ./renderd.conf:/usr/local/etc/renderd.conf
       - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
