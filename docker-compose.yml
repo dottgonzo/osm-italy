@@ -54,7 +54,7 @@ services:
       VIRTUAL_NETWORK: 'nginx-proxy'
       LETSENCRYPT_HOST: ${VIRTUAL_HOST:-maps}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
-    command: sed -i.bak s/docker_host/$docker_host/g /etc/nginx/conf.d/default.conf && nginx -g "daemon off;"
+    command: "sed -i.bak s/TESTPSK/${GEO_PSK:-TESTPSK}/g /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
       - nginx-proxy
       - gis-net
