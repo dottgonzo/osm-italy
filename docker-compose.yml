@@ -57,6 +57,7 @@ services:
     image: dottgonzo/osm-italy:nodeproxy
     networks:
       - nginx-proxy
+      - gis-net
     restart: always
     environment:
       VIRTUAL_HOST: ${JWTDATA_VIRTUAL_HOST:-maps}
