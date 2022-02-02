@@ -59,8 +59,8 @@ services:
       - nginx-proxy
       - gis-net
     volumes:
-      - ./proxy.conf:/root/proxy.conf:ro
-      - ./nginx.sh:/nginx.sh
+      - ./proxy.conf:/proxy.conf:ro
+      - ./nginx.sh:/nginx.sh:ro
     restart: always
     logging:
       driver: json-file
