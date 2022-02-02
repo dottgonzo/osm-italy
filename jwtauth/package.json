@@ -1,0 +1,20 @@
+{
+  "name": "jwtauth",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Dario Caruso",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.17.2",
+    "http-proxy-middleware": "^2.0.2",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "prettier-plugin-organize-imports": "^2.3.4"
+  }
+}

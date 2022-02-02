@@ -53,13 +53,32 @@ services:
       options:
         max-size: 50m
 
+  node-proxy:
+    build: ./jwtauth
+    networks:
+      - nginx-proxy
+    restart: always
+    environment:
+      VIRTUAL_HOST: ${JWTDATA_VIRTUAL_HOST:-maps}
+      VIRTUAL_PORT: '3000'
+      VIRTUAL_NETWORK: 'nginx-proxy'
+      LETSENCRYPT_HOST: ${JWTDATA_VIRTUAL_HOST:-maps}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
+      OSM_URI: "http://172.99.0.44"
+      NOMINATIM_URI: "http://172.99.0.33:8080"
+      JWT_SECRET: ${JWT_SECRET:-testsecret4token}
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+
   http-proxy: # TEST
     image: nginx
     environment:
-      VIRTUAL_HOST: ${VIRTUAL_HOST:-maps}
+      VIRTUAL_HOST: ${HTTP_VIRTUAL_HOST:-maps}
       VIRTUAL_PORT: '80'
       VIRTUAL_NETWORK: 'nginx-proxy'
-      LETSENCRYPT_HOST: ${VIRTUAL_HOST:-maps}
+      LETSENCRYPT_HOST: ${HTTP_VIRTUAL_HOST:-maps}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
       GEO_PSK: ${GEO_PSK:-TESTP}
     command: "/nginx.sh"
