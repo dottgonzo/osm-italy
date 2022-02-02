@@ -38,10 +38,13 @@ services:
 
   openstreetmaps: # TEST
     image: dottgonzo/osm-italy:stable
-    network_mode: host
+    networks:
+      - nginx-proxy
     # networks:
     #   gis-net:
     #     ipv4_address: 172.99.0.44
+    ports:
+        - "9090:80"
     volumes: 
       - /cloud/volumes/osm/tiles:/var/lib/mod_tile
       - ./postgresql.conf:/etc/postgresql/10/main/postgresql.conf
@@ -59,10 +62,10 @@ services:
   nominatim:
     image: dottgonzo/nominatim-italy:stale
     restart: always
-    network_mode: host
-
-      # ports:
-      #     - "8080:8080"
+    networks:
+      - nginx-proxy
+    ports:
+        - "8080:8080"
       # volumes:
       #     - /cloud/volumes/nominatim/db:/var/lib/postgresql/12/main
     shm_size: 1gb
