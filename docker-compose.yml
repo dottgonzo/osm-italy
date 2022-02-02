@@ -5,8 +5,8 @@ version: '3.4'
 networks:
   nginx-proxy:
     external: true
-  # gis-net:
-  #   external: true
+  gis-net:
+    external: true
 
 
 # volumes:
@@ -17,34 +17,32 @@ networks:
     
 services:
 
-  # openstreetmaps-proxy: # TEST
-  #   image: nginx
-  #   environment:
-  #     VIRTUAL_HOST: 'maps.dev.kernel.online'
-  #     VIRTUAL_PORT: '80'
-  #     VIRTUAL_NETWORK: 'nginx-proxy'
-  #     LETSENCRYPT_HOST: 'maps.dev.kernel.online'
-  #     LETSENCRYPT_EMAIL: 'dev@dariocaruso.info'
-  #   networks:
-  #     - nginx-proxy
-  #     - gis-net
-  #   volumes:
-  #     - ./ostileserverproxynginx.conf:/etc/nginx/nginx.conf:ro
-  #   restart: always
-  #   logging:
-  #     driver: json-file
-  #     options:
-  #       max-size: 50m
+  openstreetmaps-proxy: # TEST
+    image: nginx
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST:-maps}
+      VIRTUAL_PORT: '80'
+      VIRTUAL_NETWORK: 'nginx-proxy'
+      LETSENCRYPT_HOST: ${VIRTUAL_HOST:-maps}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
+    networks:
+      - nginx-proxy
+      - gis-net
+    volumes:
+      - ./ostileserverproxynginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
 
   openstreetmaps: # TEST
     image: dottgonzo/osm-italy:stable
     networks:
-      - nginx-proxy
-    # networks:
-    #   gis-net:
-    #     ipv4_address: 172.99.0.44
-    ports:
-        - "9090:80"
+      gis-net:
+        ipv4_address: 172.99.0.44
+    # ports:
+    #     - "9090:80"
     volumes: 
       - /cloud/volumes/osm/tiles:/var/lib/mod_tile
       - ./postgresql.conf:/etc/postgresql/10/main/postgresql.conf
@@ -63,9 +61,10 @@ services:
     image: dottgonzo/nominatim-italy:stale
     restart: always
     networks:
-      - nginx-proxy
-    ports:
-        - "8080:8080"
+      gis-net:
+        ipv4_address: 172.99.0.33
+    # ports:
+    #     - "8080:8080"
       # volumes:
       #     - /cloud/volumes/nominatim/db:/var/lib/postgresql/12/main
     shm_size: 1gb
