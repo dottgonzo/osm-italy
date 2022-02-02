@@ -54,12 +54,13 @@ services:
       VIRTUAL_NETWORK: 'nginx-proxy'
       LETSENCRYPT_HOST: ${VIRTUAL_HOST:-maps}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
-    command: "cat ./root/proxy.conf | sed s/${GEO_PSK:-TESTPSK}/SS/g > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    command: "/nginx.sh"
     networks:
       - nginx-proxy
       - gis-net
     volumes:
       - ./proxy.conf:/root/proxy.conf:ro
+      - ./nginx.sh:/nginx.sh
     restart: always
     logging:
       driver: json-file
