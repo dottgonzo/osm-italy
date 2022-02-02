@@ -46,7 +46,7 @@ services:
       - html:/usr/share/nginx/html
 
 
-  openstreetmaps-proxy: # TEST
+  http-proxy: # TEST
     image: nginx
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST:-maps}
@@ -65,7 +65,7 @@ services:
       options:
         max-size: 50m
 
-  openstreetmaps: # TEST
+  osm: # TEST
     image: dottgonzo/osm-italy:stable
     networks:
       gis-net:
