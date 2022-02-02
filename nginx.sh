@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cat /proxy.conf | sed s/TESTPSK/AAAA/g > /etc/nginx/conf.d/default.conf && cat /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+sed s/TESTPSK/AAAA/g /proxy.conf | tee /etc/nginx/nginx.conf && nginx -g "daemon off;"
