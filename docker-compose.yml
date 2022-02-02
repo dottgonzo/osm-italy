@@ -54,6 +54,7 @@ services:
       VIRTUAL_NETWORK: 'nginx-proxy'
       LETSENCRYPT_HOST: ${VIRTUAL_HOST:-maps}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-info@ciao.com}
+      GEO_PSK: ${GEO_PSK:-TESTP}
     command: "/nginx.sh"
     networks:
       - nginx-proxy
