@@ -33,7 +33,11 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
-      
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     networks:
@@ -44,7 +48,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
-
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
 
   http-proxy: # TEST
     image: nginx
@@ -100,3 +107,7 @@ services:
       # volumes:
       #     - /cloud/volumes/nominatim/db:/var/lib/postgresql/12/main
     shm_size: 1gb
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
