@@ -57,16 +57,10 @@ services:
 
 
   nominatim:
-      container_name: nominatim
-      image: mediagis/nominatim:4.0
+      image: dottgonzo/nominatim-italy:stale
       restart: always
       ports:
           - "8080:8080"
-      environment:
-          # see https://github.com/mediagis/nominatim-docker/tree/master/4.0#configuration for more options
-          PBF_URL: https://download.geofabrik.de/europe/italy-latest.osm.pbf
-          REPLICATION_URL: https://download.geofabrik.de/europe/italy-updates/
-          NOMINATIM_PASSWORD: very_secure_password
       # volumes:
       #     - /cloud/volumes/nominatim/db:/var/lib/postgresql/12/main
       shm_size: 1gb
