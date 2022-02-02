@@ -59,8 +59,10 @@ services:
   nominatim:
       image: dottgonzo/nominatim-italy:stale
       restart: always
-      ports:
-          - "8080:8080"
+      network_mode: host
+
+      # ports:
+      #     - "8080:8080"
       # volumes:
       #     - /cloud/volumes/nominatim/db:/var/lib/postgresql/12/main
       shm_size: 1gb
