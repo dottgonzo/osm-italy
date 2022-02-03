@@ -9,12 +9,12 @@ const PORT = process.env.PORT || 3000;
 const HOST = "0.0.0.0";
 const OSM_URI = process.env.OSM_URI || "https://proxy.geo.kernel.online/osm"
 const NOMINATIM_URI = process.env.NOMINATIM_URI || "https://proxy.geo.kernel.online/nominatim"
-const PERMANENT_TOKENT = process.env.PERMANENT_TOKENT
+const PERMANENT_TOKEN = process.env.PERMANENT_TOKEN
 
 const JWT_SECRET = process.env.JWT_SECRET || 'testsecretjwt'
 
 app.use('*', (req, res, next) => {
-  if (PERMANENT_TOKENT && authorization === PERMANENT_TOKENT) return next()
+  if (PERMANENT_TOKEN && authorization === PERMANENT_TOKEN) return next()
   const authorization = req.headers['authorization']
   jwt.verify(authorization, JWT_SECRET, { maxAge: "2 days" }, function (err, decoded) {
     if (err) next(err)
