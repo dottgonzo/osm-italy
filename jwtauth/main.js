@@ -24,7 +24,7 @@ app.use('*', (req, res, next) => {
   });
 })
 app.get('/token', (req, res) => {
-  const token = jwt.sign({}, 'nenwhH9_J0noi', { expiresIn: "2 days" });
+  const token = jwt.sign({}, JWT_SECRET, { expiresIn: "2 days" });
   res.json({ token })
 });
 app.use('/nominatim', createProxyMiddleware({
