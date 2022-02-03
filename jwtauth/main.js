@@ -14,8 +14,8 @@ const PERMANENT_TOKEN = process.env.PERMANENT_TOKEN
 const JWT_SECRET = process.env.JWT_SECRET || 'testsecretjwt'
 
 app.use('*', (req, res, next) => {
-  if (PERMANENT_TOKEN && authorization === PERMANENT_TOKEN) return next()
   const authorization = req.headers['authorization']
+  if (PERMANENT_TOKEN && authorization === PERMANENT_TOKEN) return next()
   jwt.verify(authorization, JWT_SECRET, { maxAge: "2 days" }, function (err, decoded) {
     if (err) next(err)
     next()
